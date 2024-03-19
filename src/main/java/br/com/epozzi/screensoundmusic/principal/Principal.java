@@ -69,22 +69,23 @@ public class Principal {
     }
 
     private void cadastrarArtista() {
-        System.out.println("\nDigite o nome do artista: ");
-        var nomeArtista = leitura.nextLine();
-        System.out.println("\nInfomre o tipo desse artista (solo, dupla, banda): ");
-        var tipoArtista = leitura.nextLine();
+        var continuar = "S";
 
-        Artista artista = new Artista(nomeArtista, TipoArtista.fromString(tipoArtista));
-        artistaRepository.save(artista);
-        System.out.println("\n" + nomeArtista + " cadastrado!");
-        System.out.println("\nDeseja cadastrar outro artista? (S/N)");
-        var continuar = leitura.nextLine();
+        while (continuar.equalsIgnoreCase("s")) {
+            System.out.println("\nDigite o nome do artista: ");
+            var nomeArtista = leitura.nextLine();
+            System.out.println("\nInfomre o tipo desse artista (solo, dupla, banda): ");
+            var tipoArtista = leitura.nextLine();
 
-        if (continuar.equalsIgnoreCase("S")) {
-            cadastrarArtista();
-        } else {
-            exibeMenu();
+            Artista artista = new Artista(nomeArtista, TipoArtista.fromString(tipoArtista));
+            artistaRepository.save(artista);
+            System.out.println("\n" + nomeArtista + " cadastrado!");
+            System.out.println("\nDeseja cadastrar outro artista? (S/N)");
+            continuar = leitura.nextLine();
         }
+
+        exibeMenu();
+
     }
 
 
@@ -175,7 +176,7 @@ public class Principal {
         var artista = leitura.nextLine();
 
         var dadosArtista = consultaChatGpt.buscaDadosArtista(artista);
-        System.out.println("\n" + dadosArtista);
+        System.out.println("\n" + dadosArtista.trim());
 
         exibeMenu();
     }
